@@ -131,75 +131,52 @@ document.addEventListener('DOMContentLoaded', initFirebase);
 
   <!-- Phase 1: Full name -->
   <div class="splash-phase1" id="splashPhase1">
-    <div class="splash-fullname">Plate<span class="oo">oo</span></div>
+    <div class="splash-fullname" id="splashFullname"><span class="word-main">Plate</span><span class="oo-core">oo</span></div>
   </div>
 
   <!-- Phase 2: Zoom on OO → plates on table -->
   <div class="splash-phase2" id="splashPhase2">
     <div class="split-wrap" id="splitWrap">
-
-      <!-- Table line -->
+      <div class="table-stage" id="tableStage"></div>
+      <div class="table-top" id="tableTop"></div>
+      <div class="table-runner" id="tableRunner"></div>
       <div class="table-line" id="tableLine"></div>
 
-      <!-- Left plate -->
-      <div class="plate-left" id="plateLeft">
-        <div class="plate-steam" id="steam1">
-          <div class="s-line"></div><div class="s-line"></div><div class="s-line"></div>
+      <div class="place-setting" id="placeSettingLeft">
+        <div class="glass-wrap" id="glassLeft">
+          <div class="glass-bowl"></div>
+          <div class="glass-stem"></div>
+          <div class="glass-foot"></div>
         </div>
-        <svg class="plate-svg" viewBox="0 0 110 110" fill="none">
-          <!-- Shadow -->
-          <ellipse cx="55" cy="92" rx="38" ry="8" fill="rgba(0,0,0,0.15)"/>
-          <!-- Rim -->
-          <circle cx="55" cy="58" r="40" fill="rgba(192,57,43,0.25)" stroke="rgba(192,57,43,0.5)" stroke-width="2"/>
-          <!-- Plate -->
-          <circle cx="55" cy="55" r="40" fill="#FFFEF9" stroke="rgba(192,57,43,0.4)" stroke-width="2.5"/>
-          <!-- Inner ring -->
-          <circle cx="55" cy="55" r="28" fill="none" stroke="rgba(192,57,43,0.15)" stroke-width="1.5"/>
-          <!-- Food -->
-          <circle cx="50" cy="52" r="6" fill="#E67E22" opacity=".85"/>
-          <circle cx="62" cy="57" r="5" fill="#C0392B" opacity=".8"/>
-          <circle cx="55" cy="48" r="4" fill="#27AE60" opacity=".8"/>
-          <circle cx="47" cy="61" r="3" fill="#F39C12" opacity=".75"/>
-        </svg>
-        <!-- Fork -->
-        <div class="cutlery-left" id="forkEl">
-          <svg width="12" height="52" viewBox="0 0 12 52" fill="none">
-            <rect x="1" y="0" width="2" height="30" rx="1" fill="rgba(245,230,200,0.5)"/>
-            <rect x="5" y="0" width="2" height="30" rx="1" fill="rgba(245,230,200,0.5)"/>
-            <rect x="9" y="0" width="2" height="30" rx="1" fill="rgba(245,230,200,0.5)"/>
-            <rect x="2" y="28" width="8" height="24" rx="1" fill="rgba(245,230,200,0.5)"/>
-          </svg>
+        <div class="placemat"></div>
+        <div class="cutlery-left" id="forkEl"><span class="fork-shape"></span></div>
+        <div class="plate-left" id="plateLeft">
+          <div class="plate-shadow"></div>
+          <div class="plate-outer"></div>
+          <div class="plate-inner"></div>
+          <div class="napkin"></div>
         </div>
+        <div class="cutlery-right" id="knifeLeft"><span class="knife-shape"></span></div>
       </div>
 
-      <!-- Gap between plates -->
-      <div style="width:24px;flex-shrink:0;"></div>
-
-      <!-- Right plate -->
-      <div class="plate-right" id="plateRight">
-        <div class="plate-steam" id="steam2">
-          <div class="s-line"></div><div class="s-line"></div><div class="s-line"></div>
+      <div class="place-setting" id="placeSettingRight">
+        <div class="glass-wrap" id="glassRight">
+          <div class="glass-bowl"></div>
+          <div class="glass-stem"></div>
+          <div class="glass-foot"></div>
         </div>
-        <svg class="plate-svg" viewBox="0 0 110 110" fill="none">
-          <ellipse cx="55" cy="92" rx="38" ry="8" fill="rgba(0,0,0,0.15)"/>
-          <circle cx="55" cy="58" r="40" fill="rgba(192,57,43,0.25)" stroke="rgba(192,57,43,0.5)" stroke-width="2"/>
-          <circle cx="55" cy="55" r="40" fill="#FFFEF9" stroke="rgba(192,57,43,0.4)" stroke-width="2.5"/>
-          <circle cx="55" cy="55" r="28" fill="none" stroke="rgba(192,57,43,0.15)" stroke-width="1.5"/>
-          <circle cx="58" cy="53" r="6" fill="#E67E22" opacity=".85"/>
-          <circle cx="48" cy="58" r="5" fill="#C0392B" opacity=".8"/>
-          <circle cx="57" cy="62" r="4" fill="#27AE60" opacity=".8"/>
-          <circle cx="63" cy="50" r="3" fill="#F39C12" opacity=".75"/>
-        </svg>
-        <!-- Knife -->
-        <div class="cutlery-right" id="knifeEl">
-          <svg width="12" height="52" viewBox="0 0 12 52" fill="none">
-            <path d="M5 0 C5 0 10 8 10 16 L7 30 L5 52 L3 30 L3 16 C3 8 5 0 5 0Z" fill="rgba(245,230,200,0.5)"/>
-          </svg>
+        <div class="placemat"></div>
+        <div class="cutlery-left" id="forkRight"><span class="fork-shape"></span></div>
+        <div class="plate-right" id="plateRight">
+          <div class="plate-shadow"></div>
+          <div class="plate-outer"></div>
+          <div class="plate-inner"></div>
+          <div class="napkin"></div>
         </div>
+        <div class="cutlery-right" id="knifeEl"><span class="knife-shape"></span></div>
       </div>
-
     </div>
-    <div class="splash-p2-tag" id="splashTag">La cuisine de chez nous, enfin accessible.</div>
+    <div class="splash-p2-tag" id="splashTag">Deux couverts, une table dressée, puis l'application s'ouvre.</div>
   </div>
 
   <!-- Loading dots -->

@@ -118,99 +118,77 @@ function hideSplash() {
   document.getElementById('loading').classList.add('hide');
   setTimeout(() => {
     if(!window.currentUser) document.getElementById('authModal').classList.add('show');
-  }, 200);
+  }, 180);
 }
 
 function runSplashAnimation() {
   const phase1 = document.getElementById('splashPhase1');
   const phase2 = document.getElementById('splashPhase2');
-  const plateLeft = document.getElementById('plateLeft');
-  const plateRight = document.getElementById('plateRight');
+  const fullname = document.getElementById('splashFullname');
+  const leftSetting = document.getElementById('placeSettingLeft');
+  const rightSetting = document.getElementById('placeSettingRight');
   const forkEl = document.getElementById('forkEl');
+  const knifeLeft = document.getElementById('knifeLeft');
+  const forkRight = document.getElementById('forkRight');
   const knifeEl = document.getElementById('knifeEl');
   const tableLine = document.getElementById('tableLine');
-  const steam1 = document.getElementById('steam1');
-  const steam2 = document.getElementById('steam2');
+  const tableRunner = document.getElementById('tableRunner');
+  const tableStage = document.getElementById('tableStage');
+  const tableTop = document.getElementById('tableTop');
+  const glassLeft = document.getElementById('glassLeft');
+  const glassRight = document.getElementById('glassRight');
   const splashTag = document.getElementById('splashTag');
   const splashDots = document.getElementById('splashDots');
 
-  // Step 1 — name appears (handled by CSS animation)
-
-  // Step 2 — after 1.4s, zoom in on name then cross-fade to phase2
   setTimeout(() => {
-    // Zoom the full name
-    const fullname = phase1.querySelector('.splash-fullname');
-    if(fullname) {
-      fullname.style.transition = 'all .6s cubic-bezier(.4,0,.2,1)';
-      fullname.style.transform = 'scale(2.2)';
-      fullname.style.opacity = '0';
+    fullname?.classList.add('focus-oo');
+  }, 1250);
+
+  setTimeout(() => {
+    phase2?.classList.add('ready');
+  }, 1680);
+
+  setTimeout(() => {
+    if(phase1) phase1.style.opacity = '0';
+    if(tableStage) {
+      tableStage.style.opacity = '1';
+      tableStage.style.transform = 'translateY(0) scale(1)';
     }
-  }, 1400);
-
-  // Step 3 — show plates side by side, far apart initially
-  setTimeout(() => {
-    phase1.style.transition = 'opacity .3s';
-    phase1.style.opacity = '0';
-    phase2.style.display = 'flex';
-    phase2.style.transition = 'opacity .4s';
-    phase2.style.opacity = '1';
-
-    // Plates start far apart
-    plateLeft.style.transition = 'none';
-    plateRight.style.transition = 'none';
-    plateLeft.style.transform = 'translateX(-90px) scale(0.3)';
-    plateRight.style.transform = 'translateX(90px) scale(0.3)';
-    plateLeft.style.opacity = '0';
-    plateRight.style.opacity = '0';
-  }, 1800);
-
-  // Step 4 — plates fly in from sides and land on table
-  setTimeout(() => {
-    plateLeft.style.transition = 'all .65s cubic-bezier(.34,1.3,.64,1)';
-    plateRight.style.transition = 'all .65s cubic-bezier(.34,1.3,.64,1)';
-    plateLeft.style.transform = 'translateX(0) scale(1)';
-    plateRight.style.transform = 'translateX(0) scale(1)';
-    plateLeft.style.opacity = '1';
-    plateRight.style.opacity = '1';
-  }, 1950);
-
-  // Step 5 — table line appears
-  setTimeout(() => {
+    if(tableTop) {
+      tableTop.style.opacity = '1';
+      tableTop.style.transform = 'translateY(0)';
+    }
     if(tableLine) {
-      tableLine.style.transition = 'opacity .5s, transform .5s';
       tableLine.style.opacity = '1';
+      tableLine.style.transform = 'scaleX(1)';
     }
-  }, 2400);
-
-  // Step 6 — cutlery slides in
-  setTimeout(() => {
-    if(forkEl) {
-      forkEl.style.transition = 'opacity .4s, transform .5s cubic-bezier(.34,1.3,.64,1)';
-      forkEl.style.opacity = '1';
-      forkEl.style.transform = 'translateY(-50%) translateX(0)';
+    if(tableRunner) {
+      tableRunner.style.opacity = '1';
+      tableRunner.style.transform = 'translateX(-50%) translateY(0)';
     }
-    if(knifeEl) {
-      knifeEl.style.transition = 'opacity .4s .1s, transform .5s .1s cubic-bezier(.34,1.3,.64,1)';
-      knifeEl.style.opacity = '1';
-    }
-  }, 2550);
+  }, 1810);
 
-  // Step 7 — steam rises
   setTimeout(() => {
-    if(steam1) { steam1.style.transition = 'opacity .4s'; steam1.style.opacity = '1'; }
-    if(steam2) { steam2.style.transition = 'opacity .4s .15s'; steam2.style.opacity = '1'; }
-  }, 2750);
+    leftSetting?.classList.add('show');
+    rightSetting?.classList.add('show');
+  }, 1940);
 
-  // Step 8 — tagline fades in
   setTimeout(() => {
-    if(splashTag) { splashTag.style.transition = 'opacity .5s'; splashTag.style.opacity = '1'; }
-    if(splashDots) { splashDots.style.transition = 'opacity .5s'; splashDots.style.opacity = '1'; }
-  }, 3000);
+    [glassLeft, glassRight].forEach(el => el?.classList.add('show'));
+  }, 2260);
 
-  // Step 9 — auto dismiss
+  setTimeout(() => {
+    [forkEl, knifeLeft, forkRight, knifeEl].forEach(el => el?.classList.add('show'));
+  }, 2380);
+
+  setTimeout(() => {
+    if(splashTag) splashTag.style.opacity = '1';
+    if(splashDots) splashDots.style.opacity = '1';
+  }, 2580);
+
   setTimeout(() => {
     hideSplash();
-  }, 4400);
+  }, 3820);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
