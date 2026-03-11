@@ -146,55 +146,46 @@ function runSplashAnimation() {
 
   setTimeout(() => {
     phase2?.classList.add('ready');
-  }, 1500);
+  }, 1680);
 
   setTimeout(() => {
-    if(tableStage) {
+    if (phase1) phase1.style.opacity = '0';
+    if (tableStage) {
       tableStage.style.opacity = '1';
       tableStage.style.transform = 'translateY(0) scale(1)';
     }
-    if(tableTop) {
+    if (tableTop) {
       tableTop.style.opacity = '1';
       tableTop.style.transform = 'translateY(0)';
     }
-    if(tableLine) {
+    if (tableLine) {
       tableLine.style.opacity = '1';
       tableLine.style.transform = 'scaleX(1)';
     }
-    if(tableRunner) {
+    if (tableRunner) {
       tableRunner.style.opacity = '1';
       tableRunner.style.transform = 'translateX(-50%) translateY(0)';
     }
-  }, 1600);
+  }, 1820);
 
   setTimeout(() => {
     leftSetting?.classList.add('show');
     rightSetting?.classList.add('show');
-  }, 1730);
+  }, 2060);
 
   setTimeout(() => {
     [glassLeft, glassRight].forEach(el => el?.classList.add('show'));
-  }, 1960);
-
-  setTimeout(() => {
     [forkEl, knifeLeft, forkRight, knifeEl].forEach(el => el?.classList.add('show'));
-  }, 2050);
-
-  setTimeout(() => {
-    if(splashTag) splashTag.style.opacity = '1';
-  }, 2140);
-
-  setTimeout(() => {
-    if(splashDots) splashDots.style.opacity = '1';
-  }, 2240);
-
-  setTimeout(() => {
-    if(phase1) phase1.style.opacity = '0';
   }, 2320);
 
   setTimeout(() => {
+    if (splashTag) splashTag.style.opacity = '1';
+    if (splashDots) splashDots.style.opacity = '1';
+  }, 2520);
+
+  setTimeout(() => {
     hideSplash();
-  }, 3200);
+  }, 3880);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
