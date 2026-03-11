@@ -125,70 +125,41 @@ function runSplashAnimation() {
   const phase1 = document.getElementById('splashPhase1');
   const phase2 = document.getElementById('splashPhase2');
   const fullname = document.getElementById('splashFullname');
-  const leftSetting = document.getElementById('placeSettingLeft');
-  const rightSetting = document.getElementById('placeSettingRight');
-  const forkEl = document.getElementById('forkEl');
-  const knifeLeft = document.getElementById('knifeLeft');
-  const forkRight = document.getElementById('forkRight');
-  const knifeEl = document.getElementById('knifeEl');
-  const tableLine = document.getElementById('tableLine');
-  const tableRunner = document.getElementById('tableRunner');
-  const tableStage = document.getElementById('tableStage');
-  const tableTop = document.getElementById('tableTop');
-  const glassLeft = document.getElementById('glassLeft');
-  const glassRight = document.getElementById('glassRight');
+  const tableScene = document.getElementById('tableScene');
+  const topSetting = document.getElementById('placeSettingTop');
+  const bottomSetting = document.getElementById('placeSettingBottom');
   const splashTag = document.getElementById('splashTag');
   const splashDots = document.getElementById('splashDots');
 
   setTimeout(() => {
     fullname?.classList.add('focus-oo');
-  }, 1250);
-
-  setTimeout(() => {
-    phase2?.classList.add('ready');
-  }, 1680);
+  }, 1100);
 
   setTimeout(() => {
     if(phase1) phase1.style.opacity = '0';
-    if(tableStage) {
-      tableStage.style.opacity = '1';
-      tableStage.style.transform = 'translateY(0) scale(1)';
+    if(phase2) {
+      phase2.style.opacity = '1';
+      phase2.style.transition = 'opacity .45s ease';
     }
-    if(tableTop) {
-      tableTop.style.opacity = '1';
-      tableTop.style.transform = 'translateY(0)';
-    }
-    if(tableLine) {
-      tableLine.style.opacity = '1';
-      tableLine.style.transform = 'scaleX(1)';
-    }
-    if(tableRunner) {
-      tableRunner.style.opacity = '1';
-      tableRunner.style.transform = 'translateX(-50%) translateY(0)';
-    }
-  }, 1810);
+    tableScene?.classList.add('show');
+  }, 1650);
 
   setTimeout(() => {
-    leftSetting?.classList.add('show');
-    rightSetting?.classList.add('show');
-  }, 1940);
+    topSetting?.classList.add('show');
+  }, 1960);
 
   setTimeout(() => {
-    [glassLeft, glassRight].forEach(el => el?.classList.add('show'));
-  }, 2260);
-
-  setTimeout(() => {
-    [forkEl, knifeLeft, forkRight, knifeEl].forEach(el => el?.classList.add('show'));
-  }, 2380);
+    bottomSetting?.classList.add('show');
+  }, 2140);
 
   setTimeout(() => {
     if(splashTag) splashTag.style.opacity = '1';
     if(splashDots) splashDots.style.opacity = '1';
-  }, 2580);
+  }, 2550);
 
   setTimeout(() => {
     hideSplash();
-  }, 3820);
+  }, 3950);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
