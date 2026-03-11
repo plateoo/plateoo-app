@@ -925,4 +925,5 @@ async function detectUserRole(user) {
     showClientApp();
   }
 
-}
+showAuth();
+  
