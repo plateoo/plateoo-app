@@ -168,11 +168,11 @@ function runSplashAnimation() {
   setTimeout(() => {
     if(splashTag) { splashTag.style.opacity = '1'; splashTag.style.transform = 'translateX(-50%) translateY(0)'; }
     if(splashDots) { splashDots.style.transition = 'opacity .5s'; splashDots.style.opacity = '1'; }
-  }, 3050);
+  }, 3250);
 
   setTimeout(() => {
     hideSplash();
-  }, 4400);
+  }, 6200);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
