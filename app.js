@@ -124,42 +124,55 @@ function hideSplash() {
 function runSplashAnimation() {
   const phase1 = document.getElementById('splashPhase1');
   const phase2 = document.getElementById('splashPhase2');
-  const fullname = document.getElementById('splashFullname');
-  const tableScene = document.getElementById('tableScene');
-  const topSetting = document.getElementById('placeSettingTop');
-  const bottomSetting = document.getElementById('placeSettingBottom');
   const splashTag = document.getElementById('splashTag');
   const splashDots = document.getElementById('splashDots');
+  const leftSetting = document.getElementById('placeSettingLeft');
+  const rightSetting = document.getElementById('placeSettingRight');
+  const tableTop = document.getElementById('tableTop');
+  const tableRunner = document.getElementById('tableRunner');
 
   setTimeout(() => {
-    fullname?.classList.add('focus-oo');
-  }, 1100);
+    const fullname = phase1?.querySelector('.splash-fullname');
+    if(fullname) {
+      fullname.style.transition = 'all .6s cubic-bezier(.4,0,.2,1)';
+      fullname.style.transform = 'scale(2.2)';
+      fullname.style.opacity = '0';
+    }
+  }, 1400);
 
   setTimeout(() => {
-    if(phase1) phase1.style.opacity = '0';
-    if(phase2) {
+    if (phase1) {
+      phase1.style.transition = 'opacity .3s';
+      phase1.style.opacity = '0';
+    }
+    if (phase2) {
+      phase2.style.display = 'flex';
       phase2.style.opacity = '1';
       phase2.style.transition = 'opacity .45s ease';
     }
-    tableScene?.classList.add('show');
-  }, 1650);
+    if (tableTop) {
+      tableTop.style.opacity = '1';
+      tableTop.style.transform = 'translate(-50%,-50%) scale(1)';
+    }
+    if (tableRunner) {
+      tableRunner.style.opacity = '1';
+      tableRunner.style.transform = 'translate(-50%,-50%)';
+    }
+  }, 1800);
 
   setTimeout(() => {
-    topSetting?.classList.add('show');
-  }, 1960);
+    leftSetting?.classList.add('show');
+    rightSetting?.classList.add('show');
+  }, 2150);
 
   setTimeout(() => {
-    bottomSetting?.classList.add('show');
-  }, 2140);
-
-  setTimeout(() => {
-    if(splashTag) splashTag.style.opacity = '1';
-    if(splashDots) splashDots.style.opacity = '1';
-  }, 2550);
+    if(splashTag) { splashTag.style.opacity = '1'; splashTag.style.transform = 'translateX(-50%) translateY(0)'; }
+    if(splashDots) { splashDots.style.transition = 'opacity .5s'; splashDots.style.opacity = '1'; }
+  }, 3050);
 
   setTimeout(() => {
     hideSplash();
-  }, 3950);
+  }, 4400);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
