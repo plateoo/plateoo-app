@@ -372,27 +372,14 @@ html,body{height:100%;height:100dvh;overflow:hidden;font-family:'DM Sans',sans-s
 .map-screen.active{display:flex;}
 
 
-/* V16 FINAL OVERRIDES — fixed arc title + bottom bubbles */
-.plateoo-arc{position:absolute;left:50%;top:24%;transform:translateX(-50%);width:320px;height:120px;z-index:120;pointer-events:none;opacity:1 !important;display:block !important;}
-.plateoo-arc span{position:absolute;left:50%;top:50%;transform-origin:0 96px;font-size:40px;font-weight:800;color:#F5E6C8;text-shadow:0 8px 18px rgba(0,0,0,.25);line-height:1;white-space:nowrap;}
-.plateoo-arc span:nth-child(1){transform:rotate(-30deg) translateY(-96px);}
-.plateoo-arc span:nth-child(2){transform:rotate(-20deg) translateY(-96px);}
-.plateoo-arc span:nth-child(3){transform:rotate(-10deg) translateY(-96px);}
-.plateoo-arc span:nth-child(4){transform:rotate(0deg) translateY(-96px);}
-.plateoo-arc span:nth-child(5){transform:rotate(10deg) translateY(-96px);}
-.plateoo-arc span:nth-child(6){transform:rotate(20deg) translateY(-96px);}
-.plateoo-arc span:nth-child(7){transform:rotate(30deg) translateY(-96px);}
-.loading,.splash-phase1,.splash-phase2,.split-wrap{overflow:visible !important;}
-
-.tab-bar{position:absolute !important;left:18px !important;right:18px !important;bottom:max(18px, env(safe-area-inset-bottom)) !important;height:auto !important;padding:0 !important;background:transparent !important;border-top:none !important;box-shadow:none !important;backdrop-filter:none !important;gap:16px !important;justify-content:center !important;align-items:flex-end !important;pointer-events:none !important;z-index:1000 !important;}
-.tab-item{pointer-events:auto !important;flex:0 0 76px !important;width:76px !important;height:76px !important;border-radius:24px !important;background:#C0392B !important;padding:10px 6px 8px !important;gap:6px !important;box-shadow:0 12px 30px rgba(44,24,16,.18) !important;display:flex !important;flex-direction:column !important;align-items:center !important;justify-content:center !important;}
-.tab-icon{font-size:30px !important;line-height:1 !important;transform:none !important;}
-.tab-label{font-size:11px !important;font-weight:800 !important;color:#fff !important;line-height:1.05 !important;}
-.tab-item.active{background:#8F2B1F !important;transform:translateY(-6px) scale(1.05) !important;box-shadow:0 16px 34px rgba(44,24,16,.24),0 0 0 4px rgba(255,255,255,.6) !important;opacity:1 !important;}
-.tab-item.active .tab-label{color:#fff !important;}
-.tab-item.active .tab-icon{transform:scale(1.08) !important;}
-.tab-item:not(.active){background:#C0392B !important;opacity:1 !important;}
-.home-screen,.map-screen{padding-bottom:calc(116px + env(safe-area-inset-bottom)) !important;}
-.bottom-panel{bottom:calc(112px + env(safe-area-inset-bottom)) !important;}
-.map-controls{bottom:calc(160px + env(safe-area-inset-bottom)) !important;}
-.results-badge{bottom:calc(268px + env(safe-area-inset-bottom)) !important;}
+/* Role dashboards */
+.role-dashboard{position:fixed;inset:0;z-index:1200;background:linear-gradient(180deg,#f7f2ea 0%,#fff 100%);overflow:auto;padding:24px 18px calc(30px + env(safe-area-inset-bottom));}
+.role-header{display:flex;align-items:center;gap:14px;margin-bottom:20px;}
+.role-back{width:42px;height:42px;border:none;border-radius:14px;background:#fff;box-shadow:0 8px 18px rgba(44,24,16,.08);font-size:22px;color:var(--brown);}
+.role-eyebrow{font-size:12px;font-weight:700;color:var(--brick);text-transform:uppercase;letter-spacing:.08em;}
+.role-title{font-family:'Fraunces',serif;font-size:28px;font-weight:700;color:var(--brown);}
+.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.role-card{background:#fff;border:1px solid var(--gray-l);border-radius:18px;padding:18px;box-shadow:0 10px 22px rgba(44,24,16,.05);}
+.role-card h3{font-family:'Fraunces',serif;font-size:18px;color:var(--brown);margin:0 0 8px;}
+.role-card p{margin:0;font-size:13px;line-height:1.55;color:var(--gray);}
+@media (max-width:600px){.role-grid{grid-template-columns:1fr;}}

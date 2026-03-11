@@ -53,14 +53,17 @@ async function initFirebase() {
     window.auth = firebase.auth();
     window.googleProvider = new firebase.auth.GoogleAuthProvider();
 
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged(async (user) => {
       window.currentUser = user;
       if(user) {
         const modal = document.getElementById('authModal');
         if(modal) modal.classList.remove('show');
         const av = document.getElementById('userAvatar');
         if(av) av.textContent = user.displayName ? user.displayName[0].toUpperCase() : user.email[0].toUpperCase();
+        await detectUserRole(user);
         window.loadChefs();
+      } else {
+        showClientApp();
       }
     });
 
@@ -642,6 +645,14 @@ async function doRegister() {
   try {
     const cred = await firebase.auth().createUserWithEmailAndPassword(email, pwd);
     await cred.user.updateProfile({ displayName: name });
+    if(window.db){
+      await firebase.firestore().collection('users').doc(cred.user.uid).set({
+        displayName: name,
+        email: email,
+        role: selectedRole || 'client',
+        status: 'active'
+      }, {merge:true});
+    }
     showToast('🎉 Compte créé ! Bienvenue ' + name + ' !');
     document.getElementById('authModal').classList.remove('show');
   } catch(e) {
@@ -894,32 +905,84 @@ window.mapsError = function() {
   if(window.firebaseReady) window.loadChefs();
 };
 window._mapsT = setTimeout(window.mapsError, 5000);
-async function detectUserRole(user) {
 
-  const uid = user.uid;
 
-  const docRef = doc(db, "users", uid);
-  const docSnap = await getDoc(docRef);
+// ══ ROLE SYSTEM ══
+function hideAllRoleApps(){
+  document.getElementById("adminApp")?.style.setProperty("display","none");
+  document.getElementById("chefApp")?.style.setProperty("display","none");
+  document.getElementById("commercialApp")?.style.setProperty("display","none");
+}
 
-  if (!docSnap.exists()) {
-    console.log("Utilisateur sans rôle → client");
+function showPublicChrome(show){
+  const tabBar=document.querySelector('.tab-bar');
+  const panel=document.getElementById('bottomPanel');
+  const controls=document.querySelector('.map-controls');
+  const badge=document.querySelector('.results-badge');
+  const home=document.getElementById('homeScreen');
+  const map=document.getElementById('mapScreen');
+  if(tabBar) tabBar.style.display = show ? 'flex' : 'none';
+  if(panel) panel.style.display = show ? '' : 'none';
+  if(controls) controls.style.display = show ? '' : 'none';
+  if(badge) badge.style.display = show ? '' : 'none';
+  if(home) home.style.display = show ? '' : 'none';
+  if(map) map.style.display = show ? '' : 'none';
+}
+
+function closeRoleApps(){
+  hideAllRoleApps();
+  showPublicChrome(true);
+  document.getElementById('homeScreen')?.classList.add('active');
+  document.getElementById('mapScreen')?.classList.remove('active');
+}
+
+function showAdminApp(){
+  hideAllRoleApps();
+  showPublicChrome(false);
+  document.getElementById('adminApp')?.style.setProperty('display','block');
+}
+
+function showChefApp(){
+  hideAllRoleApps();
+  showPublicChrome(false);
+  document.getElementById('chefApp')?.style.setProperty('display','block');
+}
+
+function showCommercialApp(){
+  hideAllRoleApps();
+  showPublicChrome(false);
+  document.getElementById('commercialApp')?.style.setProperty('display','block');
+}
+
+function showClientApp(){
+  hideAllRoleApps();
+  showPublicChrome(true);
+}
+
+async function detectUserRole(user){
+  try{
+    if(!window.firebase || !window.db || !user){
+      showClientApp();
+      return;
+    }
+    const uid=user.uid;
+    const docSnap = await firebase.firestore().collection('users').doc(uid).get();
+    console.log('UID connecté :', uid);
+    console.log('Document existe ?', docSnap.exists);
+    if(!docSnap.exists){
+      console.log('Utilisateur sans rôle → client');
+      showClientApp();
+      return;
+    }
+    const data = docSnap.data() || {};
+    const role = data.role || 'client';
+    console.log('ROLE :', role);
+    if(role === 'admin') showAdminApp();
+    else if(role === 'commercial') showCommercialApp();
+    else if(role === 'chef') showChefApp();
+    else showClientApp();
+  }catch(err){
+    console.error('Erreur detectUserRole :', err);
     showClientApp();
-    return;
   }
-
-  const data = docSnap.data();
-  const role = data.role;
-
-  console.log("ROLE:", role);
-
-  if (role === "admin") {
-    showAdminApp();
-  } 
-  else if (role === "commercial") {
-    showCommercialApp();
-  } 
-  else if (role === "chef") {
-    showChefApp();
-  } 
-  else {
-    showClientApp();
+}

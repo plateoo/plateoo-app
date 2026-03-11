@@ -206,12 +206,12 @@ html,body{height:100%;height:100dvh;overflow:hidden;font-family:'DM Sans',sans-s
 .panel-empty-sub{font-size:12px;color:var(--gray);margin-top:3px;}
 
 /* TAB BAR */
-.tab-bar{height:var(--tab-h);padding-bottom:max(8px, env(safe-area-inset-bottom));height:calc(var(--tab-h) + env(safe-area-inset-bottom));flex-shrink:0;background:var(--white);border-top:1px solid rgba(44,24,16,0.06);display:flex;align-items:center;justify-content:space-around;position:relative;z-index:50;}
-.tab-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:6px 0;border:none;background:transparent;}
-.tab-icon{font-size:21px;transition:transform .2s;}
-.tab-label{font-size:10px;font-weight:600;color:var(--gray);}
-.tab-item.active .tab-label{color:var(--brick);}
-.tab-item.active .tab-icon{transform:scale(1.12);}
+.tab-bar{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-evenly;align-items:flex-end;gap:10px;padding:10px 14px calc(14px + env(safe-area-inset-bottom));background:transparent;z-index:80;pointer-events:none;}
+.tab-item{width:82px;min-height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;padding:12px 8px 10px;border:none;background:var(--brick);color:var(--cream-ll);border-radius:26px 26px 20px 20px;box-shadow:0 10px 25px rgba(44,24,16,.18);pointer-events:all;}
+.tab-icon{font-size:24px;transition:transform .2s;}
+.tab-label{font-size:11px;font-weight:800;color:var(--cream-ll);}
+.tab-item.active{transform:translateY(-4px);box-shadow:0 14px 28px rgba(44,24,16,.22);}
+.tab-item.active .tab-icon{transform:scale(1.08);}
 
 /* FILTER DRAWER */
 .overlay{position:absolute;inset:0;background:rgba(44,24,16,.5);z-index:100;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(2px);}
@@ -352,7 +352,7 @@ html,body{height:100%;height:100dvh;overflow:hidden;font-family:'DM Sans',sans-s
 
 /* LOADING */
 /* ══ SPLASH SCREEN ══ */
-.loading{position:absolute;inset:0;background:var(--brown);z-index:5000;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;}
+.loading{position:absolute;inset:0;background:var(--brown);z-index:600;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;}
 .loading.hide{opacity:0;pointer-events:none;transition:opacity .8s ease;}
 .loading::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 40% 40%, rgba(192,57,43,0.12) 0%,transparent 65%),radial-gradient(ellipse at 70% 70%, rgba(230,126,34,0.08) 0%,transparent 60%);}
 
@@ -385,7 +385,7 @@ html,body{height:100%;height:100dvh;overflow:hidden;font-family:'DM Sans',sans-s
 .s-line:nth-child(3){height:12px;animation-delay:.5s;}
 
 /* Tagline phase 2 */
-.splash-p2-tag{position:absolute;bottom:-72px;font-size:16px;color:rgba(245,230,200,0.82);letter-spacing:.2px;text-align:center;opacity:0;width:320px;line-height:1.4;font-weight:600;text-shadow:0 6px 14px rgba(0,0,0,.18);}
+.splash-p2-tag{position:absolute;bottom:-72px;font-size:13px;color:rgba(245,230,200,0.45);letter-spacing:.5px;text-align:center;opacity:0;width:260px;}
 
 /* Dots */
 .splash-dots{position:absolute;bottom:80px;display:flex;gap:8px;opacity:0;}
@@ -398,7 +398,7 @@ html,body{height:100%;height:100dvh;overflow:hidden;font-family:'DM Sans',sans-s
 @keyframes dotpulse{0%,80%,100%{transform:scale(.6);opacity:.25;}40%{transform:scale(1);opacity:1;}}
 
 /* ══ HOME SCREEN ══ */
-.home-screen{position:absolute;inset:0;background:var(--gray-ll);z-index:5;overflow-y:auto;display:none;}
+.home-screen{position:absolute;inset:0;background:var(--gray-ll);z-index:5;overflow-y:auto;display:none;padding-bottom:118px;}
 .home-screen.active{display:block;}
 .home-screen::-webkit-scrollbar{display:none;}
 
@@ -471,30 +471,6 @@ html,body{height:100%;height:100dvh;overflow:hidden;font-family:'DM Sans',sans-s
 .map-screen{position:absolute;inset:0;z-index:5;display:none;flex-direction:column;}
 .map-screen.active{display:flex;}
 
-
-/* V17 FINAL OVERRIDES — svg arc title + hidden nav during splash */
-.plateoo-arc-svg{position:absolute;left:50%;top:-150px;transform:translateX(-50%);width:340px;height:150px;z-index:220;pointer-events:none;opacity:1 !important;display:block !important;}
-.plateoo-arc-svg svg{width:100%;height:100%;overflow:visible;}
-.plateoo-arc-svg text{fill:#F5E6C8;font-size:44px;font-weight:900;letter-spacing:2px;font-family:'Fraunces',serif;filter:drop-shadow(0 8px 18px rgba(0,0,0,.24));}
-.loading,.splash-phase1,.splash-phase2,.split-wrap{overflow:visible !important;}
-.loading:not(.hide) ~ .tab-bar,
-.loading:not(.hide) ~ .float-ui,
-.loading:not(.hide) ~ .home-screen,
-.loading:not(.hide) ~ .map-screen{opacity:0 !important;pointer-events:none !important;}
-
-.tab-bar{position:absolute !important;left:18px !important;right:18px !important;bottom:max(18px, env(safe-area-inset-bottom)) !important;height:auto !important;padding:0 !important;background:transparent !important;border-top:none !important;box-shadow:none !important;backdrop-filter:none !important;gap:16px !important;justify-content:center !important;align-items:flex-end !important;pointer-events:none !important;z-index:1000 !important;transition:opacity .35s ease, transform .35s ease !important;}
-.tab-item{pointer-events:auto !important;flex:0 0 76px !important;width:76px !important;height:76px !important;border-radius:24px !important;background:#C0392B !important;padding:10px 6px 8px !important;gap:6px !important;box-shadow:0 12px 30px rgba(44,24,16,.18) !important;display:flex !important;flex-direction:column !important;align-items:center !important;justify-content:center !important;opacity:1 !important;transition:transform .22s ease, background .22s ease, box-shadow .22s ease !important;}
-.tab-icon{font-size:30px !important;line-height:1 !important;transform:none !important;}
-.tab-label{font-size:11px !important;font-weight:800 !important;color:#fff !important;line-height:1.05 !important;}
-.tab-item.active{background:#8F2B1F !important;transform:translateY(-6px) scale(1.05) !important;box-shadow:0 16px 34px rgba(44,24,16,.24),0 0 0 4px rgba(255,255,255,.6) !important;opacity:1 !important;}
-.tab-item.active .tab-label{color:#fff !important;}
-.tab-item.active .tab-icon{transform:scale(1.08) !important;}
-.tab-item:not(.active){background:#C0392B !important;opacity:1 !important;}
-.home-screen,.map-screen{padding-bottom:calc(116px + env(safe-area-inset-bottom)) !important;}
-.bottom-panel{bottom:calc(112px + env(safe-area-inset-bottom)) !important;}
-.map-controls{bottom:calc(160px + env(safe-area-inset-bottom)) !important;}
-.results-badge{bottom:calc(268px + env(safe-area-inset-bottom)) !important;}
-
 </style>
 </head>
 <body>
@@ -510,17 +486,8 @@ html,body{height:100%;height:100dvh;overflow:hidden;font-family:'DM Sans',sans-s
 
   <!-- Phase 2: Zoom on OO → plates on table -->
   <div class="splash-phase2" id="splashPhase2">
+    <div class="plateoo-arc" id="plateooArc"><span>P</span><span>l</span><span>a</span><span>t</span><span>e</span><span>o</span><span>o</span></div>
     <div class="split-wrap" id="splitWrap">
-      <div class="plateoo-arc-svg" aria-label="Plateoo">
-        <svg viewBox="0 0 500 180" role="img" aria-hidden="true">
-          <defs>
-            <path id="plateooCurve" d="M 80 145 Q 250 15 420 145"></path>
-          </defs>
-          <text>
-            <textPath href="#plateooCurve" startOffset="50%" text-anchor="middle">Plateoo</textPath>
-          </text>
-        </svg>
-      </div>
 
       <!-- Table line -->
       <div class="table-line" id="tableLine"></div>
@@ -892,6 +859,43 @@ html,body{height:100%;height:100dvh;overflow:hidden;font-family:'DM Sans',sans-s
   </div>
 </div>
 
+
+<!-- ROLE DASHBOARDS -->
+<div id="chefApp" class="role-dashboard" style="display:none;">
+  <div class="role-header"><button class="role-back" onclick="closeRoleApps()">←</button><div><div class="role-eyebrow">Plateoo</div><div class="role-title">Espace Chef</div></div></div>
+  <div class="role-grid">
+    <div class="role-card"><h3>Dashboard</h3><p>Vue globale de l'activité du chef.</p></div>
+    <div class="role-card"><h3>Mes plats</h3><p>Ajouter, modifier et gérer les plats.</p></div>
+    <div class="role-card"><h3>Commandes</h3><p>Voir, accepter et mettre à jour les commandes.</p></div>
+    <div class="role-card"><h3>Promotions</h3><p>Mettre un plat à l'honneur ou en promotion.</p></div>
+    <div class="role-card"><h3>Avis</h3><p>Consulter les commentaires clients.</p></div>
+    <div class="role-card"><h3>Revenus</h3><p>Suivre le brut, la commission et le net.</p></div>
+  </div>
+</div>
+
+<div id="commercialApp" class="role-dashboard" style="display:none;">
+  <div class="role-header"><button class="role-back" onclick="closeRoleApps()">←</button><div><div class="role-eyebrow">Plateoo</div><div class="role-title">Espace Commercial</div></div></div>
+  <div class="role-grid">
+    <div class="role-card"><h3>Dashboard</h3><p>Suivre les prospects et dossiers en cours.</p></div>
+    <div class="role-card"><h3>Dossiers chefs</h3><p>Créer et compléter les fiches partenaires.</p></div>
+    <div class="role-card"><h3>Contrats</h3><p>Préparer et envoyer les contrats.</p></div>
+    <div class="role-card"><h3>Documents</h3><p>Ajouter les pièces justificatives du chef.</p></div>
+    <div class="role-card"><h3>Validation</h3><p>Soumettre les dossiers à l'administration.</p></div>
+    <div class="role-card"><h3>Notes</h3><p>Suivre les remarques commerciales et négociations.</p></div>
+  </div>
+</div>
+
+<div id="adminApp" class="role-dashboard" style="display:none;">
+  <div class="role-header"><button class="role-back" onclick="closeRoleApps()">←</button><div><div class="role-eyebrow">Plateoo</div><div class="role-title">Espace Admin</div></div></div>
+  <div class="role-grid">
+    <div class="role-card"><h3>Vue globale</h3><p>Résumé activité, chefs et commandes.</p></div>
+    <div class="role-card"><h3>Analytics</h3><p>Suivi des volumes, performances et revenus.</p></div>
+    <div class="role-card"><h3>Chefs</h3><p>Valider, suspendre ou modifier les partenaires.</p></div>
+    <div class="role-card"><h3>Commerciaux</h3><p>Suivre l'activité et les dossiers signés.</p></div>
+    <div class="role-card"><h3>Contrats</h3><p>Vérifier les commissions et conditions négociées.</p></div>
+    <div class="role-card"><h3>Documents</h3><p>Accéder aux pièces sensibles et à l'historique.</p></div>
+  </div>
+</div>
 <!-- ADMIN PANEL -->
 <div class="admin-panel" id="adminPanel">
   <div class="admin-header">
