@@ -142,50 +142,53 @@ function runSplashAnimation() {
 
   setTimeout(() => {
     fullname?.classList.add('focus-oo');
-  }, 1050);
+  }, 1250);
 
   setTimeout(() => {
     phase2?.classList.add('ready');
   }, 1680);
 
   setTimeout(() => {
-    if (phase1) phase1.style.opacity = '0';
-    if (tableStage) {
+    if(phase1) phase1.style.opacity = '0';
+    if(tableStage) {
       tableStage.style.opacity = '1';
       tableStage.style.transform = 'translateY(0) scale(1)';
     }
-    if (tableTop) {
+    if(tableTop) {
       tableTop.style.opacity = '1';
       tableTop.style.transform = 'translateY(0)';
     }
-    if (tableLine) {
+    if(tableLine) {
       tableLine.style.opacity = '1';
       tableLine.style.transform = 'scaleX(1)';
     }
-    if (tableRunner) {
+    if(tableRunner) {
       tableRunner.style.opacity = '1';
       tableRunner.style.transform = 'translateX(-50%) translateY(0)';
     }
-  }, 1820);
+  }, 1810);
 
   setTimeout(() => {
     leftSetting?.classList.add('show');
     rightSetting?.classList.add('show');
-  }, 2060);
+  }, 1940);
 
   setTimeout(() => {
     [glassLeft, glassRight].forEach(el => el?.classList.add('show'));
-    [forkEl, knifeLeft, forkRight, knifeEl].forEach(el => el?.classList.add('show'));
-  }, 2320);
+  }, 2260);
 
   setTimeout(() => {
-    if (splashTag) splashTag.style.opacity = '1';
-    if (splashDots) splashDots.style.opacity = '1';
-  }, 2520);
+    [forkEl, knifeLeft, forkRight, knifeEl].forEach(el => el?.classList.add('show'));
+  }, 2380);
+
+  setTimeout(() => {
+    if(splashTag) splashTag.style.opacity = '1';
+    if(splashDots) splashDots.style.opacity = '1';
+  }, 2580);
 
   setTimeout(() => {
     hideSplash();
-  }, 3880);
+  }, 3820);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
