@@ -923,7 +923,3 @@ async function detectUserRole(user) {
   } 
   else {
     showClientApp();
-  }
-
-showAuth();
-  
