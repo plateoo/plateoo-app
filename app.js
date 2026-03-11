@@ -124,55 +124,71 @@ function hideSplash() {
 function runSplashAnimation() {
   const phase1 = document.getElementById('splashPhase1');
   const phase2 = document.getElementById('splashPhase2');
-  const splashTag = document.getElementById('splashTag');
-  const splashDots = document.getElementById('splashDots');
+  const fullname = document.getElementById('splashFullname');
   const leftSetting = document.getElementById('placeSettingLeft');
   const rightSetting = document.getElementById('placeSettingRight');
-  const tableTop = document.getElementById('tableTop');
+  const forkEl = document.getElementById('forkEl');
+  const knifeLeft = document.getElementById('knifeLeft');
+  const forkRight = document.getElementById('forkRight');
+  const knifeEl = document.getElementById('knifeEl');
+  const tableLine = document.getElementById('tableLine');
   const tableRunner = document.getElementById('tableRunner');
+  const tableStage = document.getElementById('tableStage');
+  const tableTop = document.getElementById('tableTop');
+  const glassLeft = document.getElementById('glassLeft');
+  const glassRight = document.getElementById('glassRight');
+  const splashTag = document.getElementById('splashTag');
+  const splashDots = document.getElementById('splashDots');
 
   setTimeout(() => {
-    const fullname = phase1?.querySelector('.splash-fullname');
-    if(fullname) {
-      fullname.style.transition = 'all .6s cubic-bezier(.4,0,.2,1)';
-      fullname.style.transform = 'scale(2.2)';
-      fullname.style.opacity = '0';
-    }
-  }, 1400);
+    fullname?.classList.add('focus-oo');
+  }, 1250);
 
   setTimeout(() => {
-    if (phase1) {
-      phase1.style.transition = 'opacity .3s';
-      phase1.style.opacity = '0';
+    phase2?.classList.add('ready');
+  }, 1680);
+
+  setTimeout(() => {
+    if(phase1) phase1.style.opacity = '0';
+    if(tableStage) {
+      tableStage.style.opacity = '1';
+      tableStage.style.transform = 'translateY(0) scale(1)';
     }
-    if (phase2) {
-      phase2.style.display = 'flex';
-      phase2.style.opacity = '1';
-      phase2.style.transition = 'opacity .45s ease';
-    }
-    if (tableTop) {
+    if(tableTop) {
       tableTop.style.opacity = '1';
-      tableTop.style.transform = 'translate(-50%,-50%) scale(1)';
+      tableTop.style.transform = 'translateY(0)';
     }
-    if (tableRunner) {
+    if(tableLine) {
+      tableLine.style.opacity = '1';
+      tableLine.style.transform = 'scaleX(1)';
+    }
+    if(tableRunner) {
       tableRunner.style.opacity = '1';
-      tableRunner.style.transform = 'translate(-50%,-50%)';
+      tableRunner.style.transform = 'translateX(-50%) translateY(0)';
     }
-  }, 1800);
+  }, 1810);
 
   setTimeout(() => {
     leftSetting?.classList.add('show');
     rightSetting?.classList.add('show');
-  }, 2150);
+  }, 1940);
 
   setTimeout(() => {
-    if(splashTag) { splashTag.style.opacity = '1'; splashTag.style.transform = 'translateX(-50%) translateY(0)'; }
-    if(splashDots) { splashDots.style.transition = 'opacity .5s'; splashDots.style.opacity = '1'; }
-  }, 3250);
+    [glassLeft, glassRight].forEach(el => el?.classList.add('show'));
+  }, 2260);
+
+  setTimeout(() => {
+    [forkEl, knifeLeft, forkRight, knifeEl].forEach(el => el?.classList.add('show'));
+  }, 2380);
+
+  setTimeout(() => {
+    if(splashTag) splashTag.style.opacity = '1';
+    if(splashDots) splashDots.style.opacity = '1';
+  }, 2580);
 
   setTimeout(() => {
     hideSplash();
-  }, 6200);
+  }, 3820);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
