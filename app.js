@@ -142,14 +142,13 @@ function runSplashAnimation() {
 
   setTimeout(() => {
     fullname?.classList.add('focus-oo');
-  }, 1250);
+  }, 1050);
 
   setTimeout(() => {
     phase2?.classList.add('ready');
-  }, 1680);
+  }, 1500);
 
   setTimeout(() => {
-    if(phase1) phase1.style.opacity = '0';
     if(tableStage) {
       tableStage.style.opacity = '1';
       tableStage.style.transform = 'translateY(0) scale(1)';
@@ -166,29 +165,36 @@ function runSplashAnimation() {
       tableRunner.style.opacity = '1';
       tableRunner.style.transform = 'translateX(-50%) translateY(0)';
     }
-  }, 1810);
+  }, 1600);
 
   setTimeout(() => {
     leftSetting?.classList.add('show');
     rightSetting?.classList.add('show');
-  }, 1940);
+  }, 1730);
 
   setTimeout(() => {
     [glassLeft, glassRight].forEach(el => el?.classList.add('show'));
-  }, 2260);
+  }, 1960);
 
   setTimeout(() => {
     [forkEl, knifeLeft, forkRight, knifeEl].forEach(el => el?.classList.add('show'));
-  }, 2380);
+  }, 2050);
 
   setTimeout(() => {
     if(splashTag) splashTag.style.opacity = '1';
+  }, 2140);
+
+  setTimeout(() => {
     if(splashDots) splashDots.style.opacity = '1';
-  }, 2580);
+  }, 2240);
+
+  setTimeout(() => {
+    if(phase1) phase1.style.opacity = '0';
+  }, 2320);
 
   setTimeout(() => {
     hideSplash();
-  }, 3820);
+  }, 3200);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
