@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Plateoo</title>
-<link rel="manifest" href="#" />
+<link rel="manifest" href="manifest.json" />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <!-- Firebase — chargé dynamiquement -->
@@ -206,13 +206,13 @@ html,body{height:100%;height:100dvh;overflow:hidden;font-family:'DM Sans',sans-s
 .panel-empty-sub{font-size:12px;color:var(--gray);margin-top:3px;}
 
 /* TAB BAR */
-.tab-bar{position:absolute;left:10px;right:10px;bottom:max(10px, env(safe-area-inset-bottom));height:auto;padding:0;display:flex;align-items:flex-end;justify-content:space-between;gap:10px;z-index:120;background:transparent;border:none;}
-.tab-item{flex:1;min-height:84px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;cursor:pointer;padding:12px 6px 10px;border:none;background:var(--brick);border-radius:26px;color:#fff;box-shadow:0 12px 28px rgba(44,24,16,0.20);}
+.tab-bar{position:absolute;left:0;right:0;bottom:max(10px, env(safe-area-inset-bottom));height:92px;padding:0 14px;background:transparent;border-top:none;display:flex;align-items:flex-end;justify-content:space-between;gap:12px;z-index:80;box-shadow:none;pointer-events:none;}
+.tab-item{flex:1;max-width:92px;height:84px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;cursor:pointer;padding:8px 4px 10px;border:none;background:var(--brick);border-radius:30px;box-shadow:0 10px 24px rgba(44,24,16,.20);pointer-events:auto;}
 .tab-icon{font-size:28px;line-height:1;transition:transform .2s;}
-.tab-label{font-size:12px;font-weight:800;color:#fff;letter-spacing:.2px;}
+.tab-label{font-size:13px;font-weight:800;color:#fff;line-height:1;}
+.tab-item.active{background:#A93022;transform:translateY(-2px);}
 .tab-item.active .tab-label{color:#fff;}
-.tab-item.active .tab-icon{transform:scale(1.08);}
-.tab-item.active{background:var(--brick-d);transform:translateY(-4px);}
+.tab-item.active .tab-icon{transform:scale(1.12);}
 
 /* FILTER DRAWER */
 .overlay{position:absolute;inset:0;background:rgba(44,24,16,.5);z-index:100;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(2px);}
@@ -362,44 +362,46 @@ html,body{height:100%;height:100dvh;overflow:hidden;font-family:'DM Sans',sans-s
 .splash-fullname{font-family:'Fraunces',serif;font-size:58px;font-weight:900;color:var(--cream-ll);letter-spacing:-3px;opacity:0;transform:scale(0.7);animation:nameAppear .9s cubic-bezier(.34,1.3,.64,1) .3s forwards;}
 .splash-fullname .oo{color:var(--brick);}
 
-/* Phase 2 — zoom + split */
-.splash-phase2{position:absolute;display:flex;align-items:center;justify-content:center;width:100%;opacity:0;flex-direction:column;}
-.split-wrap{position:relative;display:flex;align-items:center;justify-content:center;gap:0;margin-top:42px;}
-
-/* The two plate circles */
-.plate-left,.plate-right{width:110px;height:110px;position:relative;display:flex;align-items:center;justify-content:center;}
-.plate-svg{width:110px;height:110px;position:absolute;}
-
-/* Cutlery */
-.cutlery-left,.cutlery-right{position:absolute;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:4px;opacity:0;}
-.cutlery-left{right:calc(100% + 12px);}
-.cutlery-right{left:calc(100% + 12px);}
-
-/* Table line */
-.table-line{position:absolute;bottom:-30px;left:-80px;right:-80px;height:2px;background:rgba(245,230,200,0.15);border-radius:1px;opacity:0;}
-.arc-brand{position:absolute;left:50%;top:16%;transform:translateX(-50%);width:290px;height:90px;opacity:0;transition:opacity .45s ease;}
-.arc-brand span{position:absolute;left:50%;top:50%;transform-origin:0 0;font-family:'Fraunces',serif;font-weight:900;font-size:30px;color:var(--cream-ll);text-shadow:0 8px 18px rgba(44,24,16,.22);letter-spacing:-1px;}
-.arc-brand.show{opacity:1;}
-.arc-brand .a1{transform:translate(-120px,-18px) rotate(-24deg) scale(1.02);}
-.arc-brand .a2{transform:translate(-86px,-38px) rotate(-16deg) scale(1.04);}
-.arc-brand .a3{transform:translate(-48px,-50px) rotate(-8deg) scale(1.06);}
-.arc-brand .a4{transform:translate(-10px,-56px) rotate(-2deg) scale(1.08);}
-.arc-brand .a5{transform:translate(30px,-50px) rotate(8deg) scale(1.08);}
-.arc-brand .a6{transform:translate(68px,-36px) rotate(16deg) scale(1.06);}
-.arc-brand .a7{transform:translate(104px,-14px) rotate(24deg) scale(1.04);}
-
-/* Steam */
-.plate-steam{position:absolute;top:-22px;left:50%;transform:translateX(-50%);display:flex;gap:6px;opacity:0;}
-.s-line{width:2px;border-radius:2px;background:rgba(245,230,200,0.35);animation:steamUp 1.4s ease-in-out infinite;}
-.s-line:nth-child(1){height:12px;animation-delay:0s;}
-.s-line:nth-child(2){height:18px;animation-delay:.25s;}
-.s-line:nth-child(3){height:12px;animation-delay:.5s;}
-
-/* Tagline phase 2 */
-.splash-p2-tag{position:absolute;left:50%;bottom:-50px;transform:translateX(-50%);font-size:16px;line-height:1.45;color:rgba(245,230,200,0.92);letter-spacing:.2px;text-align:center;opacity:0;width:310px;font-weight:600;text-shadow:0 8px 18px rgba(44,24,16,.18);}
-
+/* Phase 2 — zoom + table scene */
+.splash-phase2{position:absolute;display:flex;align-items:center;justify-content:center;width:100%;height:100%;opacity:0;pointer-events:none;}
+.table-stage{position:relative;width:min(360px,calc(100% - 40px));height:430px;display:flex;align-items:center;justify-content:center;}
+.tabletop{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) scale(.92);width:86%;height:54%;border-radius:34px;background:linear-gradient(180deg,rgba(255,252,246,.98),rgba(242,234,223,.99));box-shadow:0 28px 70px rgba(0,0,0,.22);opacity:0;transition:all .7s cubic-bezier(.34,1.18,.64,1);}
+.tabletop::before,.tabletop::after{content:'';position:absolute;top:0;bottom:0;width:1.5px;background:rgba(120,99,80,.12);}
+.tabletop::before{left:24%;}
+.tabletop::after{right:24%;}
+.table-runner{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) translateY(18px);width:116px;height:54%;border-radius:0;background:linear-gradient(180deg,rgba(223,214,201,.7),rgba(232,224,213,.88));opacity:0;transition:all .55s ease;}
+.place-setting{position:absolute;top:50%;width:152px;height:152px;opacity:0;transition:all .8s cubic-bezier(.34,1.18,.64,1);}
+.place-setting.left{left:50%;transform:translate(-50%,-50%) scale(.5) rotate(0deg);}
+.place-setting.right{left:50%;transform:translate(-50%,-50%) scale(.5) rotate(0deg);}
+.place-setting.left.show{transform:translate(calc(-50% - 88px),-50%) scale(1) rotate(-10deg);opacity:1;}
+.place-setting.right.show{transform:translate(calc(-50% + 88px),-50%) scale(1) rotate(10deg);opacity:1;}
+.placemat{position:absolute;inset:20px;background:linear-gradient(180deg,#ccb997,#bba17d);border-radius:20px;box-shadow:0 18px 28px rgba(44,24,16,.10);} 
+.placemat::before{content:'';position:absolute;inset:12px;border:1px solid rgba(255,255,255,.14);background:repeating-linear-gradient(90deg,transparent 0 10px,rgba(255,255,255,.08) 10px 12px),repeating-linear-gradient(180deg,transparent 0 10px,rgba(255,255,255,.08) 10px 12px);border-radius:14px;opacity:.75;}
+.plate-wrap{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:104px;height:104px;}
+.plate-shadow{position:absolute;left:8px;right:8px;bottom:-10px;height:16px;border-radius:50%;background:rgba(44,24,16,.18);filter:blur(1px);}
+.plate-outer{position:absolute;inset:0;border-radius:50%;background:#fffdf9;border:3px solid rgba(192,57,43,.18);box-shadow:0 8px 0 rgba(192,57,43,.06),0 12px 22px rgba(44,24,16,.16);} 
+.plate-outer::before{content:'';position:absolute;inset:16px;border-radius:50%;border:2px solid rgba(44,24,16,.12);} 
+.napkin{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-10deg);width:52px;height:34px;background:rgba(233,226,216,.95);border-radius:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5);} 
+.glass{position:absolute;top:-4px;width:26px;height:62px;opacity:.9;}
+.glass.left{right:30px;}
+.glass.right{left:30px;}
+.glass::before{content:'';position:absolute;left:50%;transform:translateX(-50%);top:0;width:24px;height:28px;border:2px solid rgba(255,255,255,.82);border-bottom-left-radius:10px;border-bottom-right-radius:10px;border-top-left-radius:3px;border-top-right-radius:3px;background:rgba(255,255,255,.05);} 
+.glass::after{content:'';position:absolute;left:50%;transform:translateX(-50%);top:30px;width:2px;height:18px;background:rgba(255,255,255,.78);box-shadow:0 18px 0 8px rgba(255,255,255,.16);} 
+.cutlery{position:absolute;top:50%;transform:translateY(-50%);width:18px;height:74px;opacity:.88;}
+.cutlery.outer{left:8px;}
+.cutlery.inner{right:8px;}
+.place-setting.right .cutlery.outer{right:8px;left:auto;}
+.place-setting.right .cutlery.inner{left:8px;right:auto;}
+.cutlery.fork::before,.cutlery.fork::after,.cutlery.knife::before{content:'';position:absolute;background:rgba(93,73,58,.34);} 
+.cutlery.fork::before{left:0;top:10px;width:3px;height:34px;border-radius:2px;box-shadow:6px 0 0 rgba(93,73,58,.34),12px 0 0 rgba(93,73,58,.34);} 
+.cutlery.fork::after{left:4px;bottom:0;width:10px;height:42px;border-radius:3px;} 
+.cutlery.knife::before{left:4px;top:0;width:8px;height:74px;clip-path:polygon(50% 0,100% 18%,72% 50%,58% 100%,42% 100%,28% 50%,0 18%);border-radius:3px;} 
+.splash-slogan{position:absolute;left:50%;bottom:14.2%;transform:translateX(-50%) translateY(10px);width:320px;text-align:center;opacity:0;transition:opacity .55s ease, transform .55s ease;}
+.splash-slogan strong{display:none;}
+.splash-slogan span{display:block;font-size:18px;line-height:1.35;color:rgba(245,230,200,.92);font-weight:700;}
+.splash-slogan.show{opacity:1;transform:translateX(-50%) translateY(0);}
 /* Dots */
-.splash-dots{display:none;}
+.splash-dots{position:absolute;bottom:80px;display:flex;gap:8px;opacity:0;}
 .sdot{width:6px;height:6px;border-radius:50%;background:rgba(245,230,200,0.25);animation:dotpulse 1.4s ease-in-out infinite;}
 .sdot:nth-child(2){animation-delay:.2s;}
 .sdot:nth-child(3){animation-delay:.4s;}
@@ -497,71 +499,35 @@ html,body{height:100%;height:100dvh;overflow:hidden;font-family:'DM Sans',sans-s
 
   <!-- Phase 2: Zoom on OO → plates on table -->
   <div class="splash-phase2" id="splashPhase2">
-    <div class="arc-brand" id="arcBrand"><span class="a1">P</span><span class="a2">l</span><span class="a3">a</span><span class="a4">t</span><span class="a5">e</span><span class="a6">o</span><span class="a7">o</span></div>
-    <div class="split-wrap" id="splitWrap">
+    <div class="table-stage" id="tableStage">
+      <div class="tabletop" id="tableTop"></div>
+      <div class="table-runner" id="tableRunner"></div>
 
-      <!-- Table line -->
-      <div class="table-line" id="tableLine"></div>
-
-      <!-- Left plate -->
-      <div class="plate-left" id="plateLeft">
-        <div class="plate-steam" id="steam1">
-          <div class="s-line"></div><div class="s-line"></div><div class="s-line"></div>
-        </div>
-        <svg class="plate-svg" viewBox="0 0 110 110" fill="none">
-          <!-- Shadow -->
-          <ellipse cx="55" cy="92" rx="38" ry="8" fill="rgba(0,0,0,0.15)"/>
-          <!-- Rim -->
-          <circle cx="55" cy="58" r="40" fill="rgba(192,57,43,0.25)" stroke="rgba(192,57,43,0.5)" stroke-width="2"/>
-          <!-- Plate -->
-          <circle cx="55" cy="55" r="40" fill="#FFFEF9" stroke="rgba(192,57,43,0.4)" stroke-width="2.5"/>
-          <!-- Inner ring -->
-          <circle cx="55" cy="55" r="28" fill="none" stroke="rgba(192,57,43,0.15)" stroke-width="1.5"/>
-          <!-- Food -->
-          <circle cx="50" cy="52" r="6" fill="#E67E22" opacity=".85"/>
-          <circle cx="62" cy="57" r="5" fill="#C0392B" opacity=".8"/>
-          <circle cx="55" cy="48" r="4" fill="#27AE60" opacity=".8"/>
-          <circle cx="47" cy="61" r="3" fill="#F39C12" opacity=".75"/>
-        </svg>
-        <!-- Fork -->
-        <div class="cutlery-left" id="forkEl">
-          <svg width="12" height="52" viewBox="0 0 12 52" fill="none">
-            <rect x="1" y="0" width="2" height="30" rx="1" fill="rgba(245,230,200,0.5)"/>
-            <rect x="5" y="0" width="2" height="30" rx="1" fill="rgba(245,230,200,0.5)"/>
-            <rect x="9" y="0" width="2" height="30" rx="1" fill="rgba(245,230,200,0.5)"/>
-            <rect x="2" y="28" width="8" height="24" rx="1" fill="rgba(245,230,200,0.5)"/>
-          </svg>
+      <div class="place-setting left" id="placeSettingLeft">
+        <div class="placemat"></div>
+        <div class="glass left"></div>
+        <div class="cutlery outer fork"></div>
+        <div class="cutlery inner knife"></div>
+        <div class="plate-wrap" id="plateLeft">
+          <div class="plate-shadow"></div>
+          <div class="plate-outer"></div>
+          <div class="napkin"></div>
         </div>
       </div>
 
-      <!-- Gap between plates -->
-      <div style="width:24px;flex-shrink:0;"></div>
-
-      <!-- Right plate -->
-      <div class="plate-right" id="plateRight">
-        <div class="plate-steam" id="steam2">
-          <div class="s-line"></div><div class="s-line"></div><div class="s-line"></div>
-        </div>
-        <svg class="plate-svg" viewBox="0 0 110 110" fill="none">
-          <ellipse cx="55" cy="92" rx="38" ry="8" fill="rgba(0,0,0,0.15)"/>
-          <circle cx="55" cy="58" r="40" fill="rgba(192,57,43,0.25)" stroke="rgba(192,57,43,0.5)" stroke-width="2"/>
-          <circle cx="55" cy="55" r="40" fill="#FFFEF9" stroke="rgba(192,57,43,0.4)" stroke-width="2.5"/>
-          <circle cx="55" cy="55" r="28" fill="none" stroke="rgba(192,57,43,0.15)" stroke-width="1.5"/>
-          <circle cx="58" cy="53" r="6" fill="#E67E22" opacity=".85"/>
-          <circle cx="48" cy="58" r="5" fill="#C0392B" opacity=".8"/>
-          <circle cx="57" cy="62" r="4" fill="#27AE60" opacity=".8"/>
-          <circle cx="63" cy="50" r="3" fill="#F39C12" opacity=".75"/>
-        </svg>
-        <!-- Knife -->
-        <div class="cutlery-right" id="knifeEl">
-          <svg width="12" height="52" viewBox="0 0 12 52" fill="none">
-            <path d="M5 0 C5 0 10 8 10 16 L7 30 L5 52 L3 30 L3 16 C3 8 5 0 5 0Z" fill="rgba(245,230,200,0.5)"/>
-          </svg>
+      <div class="place-setting right" id="placeSettingRight">
+        <div class="placemat"></div>
+        <div class="glass right"></div>
+        <div class="cutlery inner fork"></div>
+        <div class="cutlery outer knife"></div>
+        <div class="plate-wrap" id="plateRight">
+          <div class="plate-shadow"></div>
+          <div class="plate-outer"></div>
+          <div class="napkin"></div>
         </div>
       </div>
-
     </div>
-    <div class="splash-p2-tag" id="splashTag">La cuisine de chez nous, enfin accessible</div>
+    <div class="splash-slogan" id="splashTag"><span>La cuisine de chez nous, enfin accessible</span></div>
   </div>
 
   <!-- Loading dots -->
@@ -968,23 +934,15 @@ function hideSplash() {
 function runSplashAnimation() {
   const phase1 = document.getElementById('splashPhase1');
   const phase2 = document.getElementById('splashPhase2');
-  const plateLeft = document.getElementById('plateLeft');
-  const plateRight = document.getElementById('plateRight');
-  const forkEl = document.getElementById('forkEl');
-  const knifeEl = document.getElementById('knifeEl');
-  const tableLine = document.getElementById('tableLine');
-  const steam1 = document.getElementById('steam1');
-  const steam2 = document.getElementById('steam2');
   const splashTag = document.getElementById('splashTag');
   const splashDots = document.getElementById('splashDots');
-  const arcBrand = document.getElementById('arcBrand');
+  const leftSetting = document.getElementById('placeSettingLeft');
+  const rightSetting = document.getElementById('placeSettingRight');
+  const tableTop = document.getElementById('tableTop');
+  const tableRunner = document.getElementById('tableRunner');
 
-  // Step 1 — name appears (handled by CSS animation)
-
-  // Step 2 — after 1.4s, zoom in on name then cross-fade to phase2
   setTimeout(() => {
-    // Zoom the full name
-    const fullname = phase1.querySelector('.splash-fullname');
+    const fullname = phase1?.querySelector('.splash-fullname');
     if(fullname) {
       fullname.style.transition = 'all .6s cubic-bezier(.4,0,.2,1)';
       fullname.style.transform = 'scale(2.2)';
@@ -992,71 +950,39 @@ function runSplashAnimation() {
     }
   }, 1400);
 
-  // Step 3 — show plates side by side, far apart initially
   setTimeout(() => {
-    phase1.style.transition = 'opacity .3s';
-    phase1.style.opacity = '0';
-    phase2.style.display = 'flex';
-    phase2.style.transition = 'opacity .4s';
-    phase2.style.opacity = '1';
-    if(arcBrand) arcBrand.classList.add('show');
-
-    // Plates start far apart
-    plateLeft.style.transition = 'none';
-    plateRight.style.transition = 'none';
-    plateLeft.style.transform = 'translateX(-90px) scale(0.3)';
-    plateRight.style.transform = 'translateX(90px) scale(0.3)';
-    plateLeft.style.opacity = '0';
-    plateRight.style.opacity = '0';
+    if (phase1) {
+      phase1.style.transition = 'opacity .3s';
+      phase1.style.opacity = '0';
+    }
+    if (phase2) {
+      phase2.style.display = 'flex';
+      phase2.style.opacity = '1';
+      phase2.style.transition = 'opacity .45s ease';
+    }
+    if (tableTop) {
+      tableTop.style.opacity = '1';
+      tableTop.style.transform = 'translate(-50%,-50%) scale(1)';
+    }
+    if (tableRunner) {
+      tableRunner.style.opacity = '1';
+      tableRunner.style.transform = 'translate(-50%,-50%)';
+    }
   }, 1800);
 
-  // Step 4 — plates fly in from sides and land on table
   setTimeout(() => {
-    plateLeft.style.transition = 'all .65s cubic-bezier(.34,1.3,.64,1)';
-    plateRight.style.transition = 'all .65s cubic-bezier(.34,1.3,.64,1)';
-    plateLeft.style.transform = 'translateX(0) scale(1)';
-    plateRight.style.transform = 'translateX(0) scale(1)';
-    plateLeft.style.opacity = '1';
-    plateRight.style.opacity = '1';
-  }, 1950);
+    leftSetting?.classList.add('show');
+    rightSetting?.classList.add('show');
+  }, 2150);
 
-  // Step 5 — table line appears
   setTimeout(() => {
-    if(tableLine) {
-      tableLine.style.transition = 'opacity .5s, transform .5s';
-      tableLine.style.opacity = '1';
-    }
-  }, 2400);
-
-  // Step 6 — cutlery slides in
-  setTimeout(() => {
-    if(forkEl) {
-      forkEl.style.transition = 'opacity .4s, transform .5s cubic-bezier(.34,1.3,.64,1)';
-      forkEl.style.opacity = '1';
-      forkEl.style.transform = 'translateY(-50%) translateX(0)';
-    }
-    if(knifeEl) {
-      knifeEl.style.transition = 'opacity .4s .1s, transform .5s .1s cubic-bezier(.34,1.3,.64,1)';
-      knifeEl.style.opacity = '1';
-    }
-  }, 2550);
-
-  // Step 7 — steam rises
-  setTimeout(() => {
-    if(steam1) { steam1.style.transition = 'opacity .4s'; steam1.style.opacity = '1'; }
-    if(steam2) { steam2.style.transition = 'opacity .4s .15s'; steam2.style.opacity = '1'; }
-  }, 2750);
-
-  // Step 8 — tagline fades in
-  setTimeout(() => {
-    if(splashTag) { splashTag.style.transition = 'opacity .6s'; splashTag.style.opacity = '1'; }
+    if(splashTag) { splashTag.style.opacity = '1'; splashTag.style.transform = 'translateX(-50%) translateY(0)'; }
     if(splashDots) { splashDots.style.transition = 'opacity .5s'; splashDots.style.opacity = '1'; }
-  }, 3150);
+  }, 3250);
 
-  // Step 9 — leave time to read, then dismiss
   setTimeout(() => {
     hideSplash();
-  }, 5850);
+  }, 6200);
 }
 
 document.addEventListener('DOMContentLoaded', () => {

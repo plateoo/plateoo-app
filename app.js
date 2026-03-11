@@ -124,73 +124,55 @@ function hideSplash() {
 function runSplashAnimation() {
   const phase1 = document.getElementById('splashPhase1');
   const phase2 = document.getElementById('splashPhase2');
-  const fullname = document.getElementById('splashFullname');
-  const leftSetting = document.getElementById('placeSettingLeft');
-  const rightSetting = document.getElementById('placeSettingRight');
-  const forkEl = document.getElementById('forkEl');
-  const knifeLeft = document.getElementById('knifeLeft');
-  const forkRight = document.getElementById('forkRight');
-  const knifeEl = document.getElementById('knifeEl');
-  const tableLine = document.getElementById('tableLine');
-  const tableRunner = document.getElementById('tableRunner');
-  const tableStage = document.getElementById('tableStage');
-  const tableTop = document.getElementById('tableTop');
-  const glassLeft = document.getElementById('glassLeft');
-  const glassRight = document.getElementById('glassRight');
   const splashTag = document.getElementById('splashTag');
   const splashDots = document.getElementById('splashDots');
-  const arcBrand = document.getElementById('arcBrand');
+  const leftSetting = document.getElementById('placeSettingLeft');
+  const rightSetting = document.getElementById('placeSettingRight');
+  const tableTop = document.getElementById('tableTop');
+  const tableRunner = document.getElementById('tableRunner');
 
   setTimeout(() => {
-    fullname?.classList.add('focus-oo');
-  }, 1250);
-
-  setTimeout(() => {
-    phase2?.classList.add('ready');
-    if(arcBrand) arcBrand.classList.add('show');
-  }, 1680);
-
-  setTimeout(() => {
-    if(phase1) phase1.style.opacity = '0';
-    if(tableStage) {
-      tableStage.style.opacity = '1';
-      tableStage.style.transform = 'translateY(0) scale(1)';
+    const fullname = phase1?.querySelector('.splash-fullname');
+    if(fullname) {
+      fullname.style.transition = 'all .6s cubic-bezier(.4,0,.2,1)';
+      fullname.style.transform = 'scale(2.2)';
+      fullname.style.opacity = '0';
     }
-    if(tableTop) {
+  }, 1400);
+
+  setTimeout(() => {
+    if (phase1) {
+      phase1.style.transition = 'opacity .3s';
+      phase1.style.opacity = '0';
+    }
+    if (phase2) {
+      phase2.style.display = 'flex';
+      phase2.style.opacity = '1';
+      phase2.style.transition = 'opacity .45s ease';
+    }
+    if (tableTop) {
       tableTop.style.opacity = '1';
-      tableTop.style.transform = 'translateY(0)';
+      tableTop.style.transform = 'translate(-50%,-50%) scale(1)';
     }
-    if(tableLine) {
-      tableLine.style.opacity = '1';
-      tableLine.style.transform = 'scaleX(1)';
-    }
-    if(tableRunner) {
+    if (tableRunner) {
       tableRunner.style.opacity = '1';
-      tableRunner.style.transform = 'translateX(-50%) translateY(0)';
+      tableRunner.style.transform = 'translate(-50%,-50%)';
     }
-  }, 1810);
+  }, 1800);
 
   setTimeout(() => {
     leftSetting?.classList.add('show');
     rightSetting?.classList.add('show');
-  }, 1940);
+  }, 2150);
 
   setTimeout(() => {
-    [glassLeft, glassRight].forEach(el => el?.classList.add('show'));
-  }, 2260);
-
-  setTimeout(() => {
-    [forkEl, knifeLeft, forkRight, knifeEl].forEach(el => el?.classList.add('show'));
-  }, 2380);
-
-  setTimeout(() => {
-    if(splashTag) splashTag.style.opacity = '1';
-    if(splashDots) splashDots.style.opacity = '1';
-  }, 3150);
+    if(splashTag) { splashTag.style.opacity = '1'; splashTag.style.transform = 'translateX(-50%) translateY(0)'; }
+    if(splashDots) { splashDots.style.transition = 'opacity .5s'; splashDots.style.opacity = '1'; }
+  }, 3250);
 
   setTimeout(() => {
     hideSplash();
-  }, 5850);
+  }, 6200);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
