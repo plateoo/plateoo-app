@@ -894,3 +894,35 @@ window.mapsError = function() {
   if(window.firebaseReady) window.loadChefs();
 };
 window._mapsT = setTimeout(window.mapsError, 5000);
+async function detectUserRole(user) {
+
+  const uid = user.uid;
+
+  const docRef = doc(db, "users", uid);
+  const docSnap = await getDoc(docRef);
+
+  if (!docSnap.exists()) {
+    console.log("Utilisateur sans rôle → client");
+    showClientApp();
+    return;
+  }
+
+  const data = docSnap.data();
+  const role = data.role;
+
+  console.log("ROLE:", role);
+
+  if (role === "admin") {
+    showAdminApp();
+  } 
+  else if (role === "commercial") {
+    showCommercialApp();
+  } 
+  else if (role === "chef") {
+    showChefApp();
+  } 
+  else {
+    showClientApp();
+  }
+
+}
