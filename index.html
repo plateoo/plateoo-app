@@ -67,14 +67,21 @@ async function initFirebase() {
     window.auth = firebase.auth();
     window.googleProvider = new firebase.auth.GoogleAuthProvider();
 
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged(async (user) => {
       window.currentUser = user;
       if(user) {
         const modal = document.getElementById('authModal');
         if(modal) modal.classList.remove('show');
         const av = document.getElementById('userAvatar');
         if(av) av.textContent = user.displayName ? user.displayName[0].toUpperCase() : user.email[0].toUpperCase();
+        if(window.detectUserRole) {
+          await window.detectUserRole(user);
+        } else {
+          showClientApp();
+        }
         window.loadChefs();
+      } else {
+        showClientApp();
       }
     });
 
@@ -207,11 +214,11 @@ html,body{height:100%;height:100dvh;overflow:hidden;font-family:'DM Sans',sans-s
 
 /* TAB BAR */
 .tab-bar{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-evenly;align-items:flex-end;gap:10px;padding:10px 14px calc(14px + env(safe-area-inset-bottom));background:transparent;z-index:80;pointer-events:none;}
-.tab-item{width:82px;min-height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;padding:12px 8px 10px;border:none;background:var(--brick);color:var(--cream-ll);border-radius:26px 26px 20px 20px;box-shadow:0 10px 25px rgba(44,24,16,.18);pointer-events:all;}
+.tab-item{width:82px;min-height:90px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer;padding:12px 8px 10px;border:none;background:var(--brick);color:var(--cream-ll);border-radius:26px 26px 20px 20px;box-shadow:0 10px 25px rgba(44,24,16,.18);pointer-events:all;transition:transform .2s ease, background .2s ease, box-shadow .2s ease, opacity .2s ease;}
 .tab-icon{font-size:24px;transition:transform .2s;}
 .tab-label{font-size:11px;font-weight:800;color:var(--cream-ll);}
-.tab-item.active{transform:translateY(-4px);box-shadow:0 14px 28px rgba(44,24,16,.22);}
-.tab-item.active .tab-icon{transform:scale(1.08);}
+.tab-item.active{background:var(--brick-d);transform:translateY(-6px) scale(1.05);box-shadow:0 14px 28px rgba(44,24,16,.24);opacity:1;}
+.tab-item.active .tab-icon{transform:scale(1.12);}
 
 /* FILTER DRAWER */
 .overlay{position:absolute;inset:0;background:rgba(44,24,16,.5);z-index:100;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(2px);}
@@ -392,6 +399,18 @@ html,body{height:100%;height:100dvh;overflow:hidden;font-family:'DM Sans',sans-s
 .sdot{width:6px;height:6px;border-radius:50%;background:rgba(245,230,200,0.25);animation:dotpulse 1.4s ease-in-out infinite;}
 .sdot:nth-child(2){animation-delay:.2s;}
 .sdot:nth-child(3){animation-delay:.4s;}
+
+
+.plateoo-arc{position:absolute;left:50%;top:-88px;transform:translateX(-50%);width:320px;height:110px;z-index:20;pointer-events:none;display:block;opacity:1;}
+.plateoo-arc span{position:absolute;left:50%;top:50%;transform-origin:0 84px;font-family:'Fraunces',serif;font-size:34px;font-weight:900;color:var(--cream-ll);text-shadow:0 6px 18px rgba(0,0,0,.22);line-height:1;}
+.plateoo-arc span:nth-child(1){transform:rotate(-30deg) translateY(-84px);} 
+.plateoo-arc span:nth-child(2){transform:rotate(-20deg) translateY(-84px);} 
+.plateoo-arc span:nth-child(3){transform:rotate(-10deg) translateY(-84px);} 
+.plateoo-arc span:nth-child(4){transform:rotate(0deg) translateY(-84px);} 
+.plateoo-arc span:nth-child(5){transform:rotate(10deg) translateY(-84px);} 
+.plateoo-arc span:nth-child(6){transform:rotate(20deg) translateY(-84px);} 
+.plateoo-arc span:nth-child(7){transform:rotate(30deg) translateY(-84px);} 
+.loading:not(.hide) ~ .tab-bar,.loading:not(.hide) ~ .bottom-nav{opacity:0!important;pointer-events:none!important;}
 
 @keyframes nameAppear{to{opacity:1;transform:scale(1);}}
 @keyframes steamUp{0%,100%{transform:translateY(0) scaleX(1);opacity:.3;}50%{transform:translateY(-8px) scaleX(.6);opacity:.7;}}
@@ -1485,6 +1504,7 @@ function toggleAuth() {
           showToast('👋 À bientôt !');
           document.getElementById('userAvatar').textContent = '?';
           window.currentUser = null;
+          showClientApp();
         });
       }
     }, 300);
@@ -1534,6 +1554,7 @@ async function doRegister() {
   try {
     const cred = await firebase.auth().createUserWithEmailAndPassword(email, pwd);
     await cred.user.updateProfile({ displayName: name });
+    await firebase.firestore().collection('users').doc(cred.user.uid).set({ displayName: name, email: email, role: selectedRole || 'client', status: 'active' }, { merge:true });
     showToast('🎉 Compte créé ! Bienvenue ' + name + ' !');
     document.getElementById('authModal').classList.remove('show');
   } catch(e) {
@@ -1543,7 +1564,15 @@ async function doRegister() {
 
 async function doGoogle() {
   try {
-    await firebase.auth().signInWithPopup(window.googleProvider);
+    const result = await firebase.auth().signInWithPopup(window.googleProvider);
+    const user = result.user;
+    if(user){
+      const uref = firebase.firestore().collection('users').doc(user.uid);
+      const usnap = await uref.get();
+      if(!usnap.exists){
+        await uref.set({ displayName: user.displayName || 'Utilisateur', email: user.email || '', role: 'client', status: 'active' }, { merge:true });
+      }
+    }
     showToast('✅ Connecté avec Google !');
     document.getElementById('authModal').classList.remove('show');
   } catch(e) {
@@ -1767,6 +1796,84 @@ window.loadChefs = async function() {
   if(_origLoadChefs) await _origLoadChefs();
   renderHomeChefs();
 };
+
+
+// ══ ROLE SYSTEM ══
+function hideAllRoleApps(){
+  document.getElementById('adminApp')?.style.setProperty('display','none');
+  document.getElementById('chefApp')?.style.setProperty('display','none');
+  document.getElementById('commercialApp')?.style.setProperty('display','none');
+}
+
+function showPublicChrome(show){
+  const tabBar=document.querySelector('.tab-bar');
+  const panel=document.getElementById('bottomPanel');
+  const controls=document.querySelector('.map-controls');
+  const badge=document.querySelector('.results-badge');
+  const home=document.getElementById('homeScreen');
+  const map=document.getElementById('mapScreen');
+  if(tabBar) tabBar.style.display = show ? 'flex' : 'none';
+  if(panel) panel.style.display = show ? '' : 'none';
+  if(controls) controls.style.display = show ? '' : 'none';
+  if(badge) badge.style.display = show ? '' : 'none';
+  if(home) home.style.display = show ? '' : 'none';
+  if(map) map.style.display = show ? '' : 'none';
+}
+
+function closeRoleApps(){
+  hideAllRoleApps();
+  showPublicChrome(true);
+  document.getElementById('homeScreen')?.classList.add('active');
+  document.getElementById('mapScreen')?.classList.remove('active');
+}
+
+function showAdminApp(){
+  hideAllRoleApps();
+  showPublicChrome(false);
+  document.getElementById('adminApp')?.style.setProperty('display','block');
+}
+
+function showChefApp(){
+  hideAllRoleApps();
+  showPublicChrome(false);
+  document.getElementById('chefApp')?.style.setProperty('display','block');
+}
+
+function showCommercialApp(){
+  hideAllRoleApps();
+  showPublicChrome(false);
+  document.getElementById('commercialApp')?.style.setProperty('display','block');
+}
+
+function showClientApp(){
+  hideAllRoleApps();
+  showPublicChrome(true);
+}
+
+window.detectUserRole = async function(user){
+  try{
+    if(!window.firebase || !window.db || !user){
+      showClientApp();
+      return;
+    }
+    const uid=user.uid;
+    const docSnap = await firebase.firestore().collection('users').doc(uid).get();
+    if(!docSnap.exists){
+      showClientApp();
+      return;
+    }
+    const data = docSnap.data() || {};
+    const role = data.role || 'client';
+    if(role === 'admin') showAdminApp();
+    else if(role === 'commercial') showCommercialApp();
+    else if(role === 'chef') showChefApp();
+    else showClientApp();
+  }catch(err){
+    console.error('Erreur detectUserRole :', err);
+    showClientApp();
+  }
+}
+
 
 // ══ TOAST ══
 let toastT;
